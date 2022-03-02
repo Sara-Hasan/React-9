@@ -14,8 +14,6 @@ export default function Comment({ post_id }) {
     }
   });
   const users = JSON.parse(localStorage.getItem("users"));
-  console.log(users);
-  // console.log(users.username);
   const [comment, setComment] = useState("");
   useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(comments));
@@ -39,15 +37,15 @@ export default function Comment({ post_id }) {
     setComment("");
   }
   const user = users.filter((ele) => {
-    console.log(ele.username);
     return ele.username;
   })[0];
+
   return (
     <div className="ui comments">
-      <div class="extra content">
+      <div className="extra content">
         <form className="ui form" onSubmit={handleFormSubmit}>
-          <div class="ui large transparent left icon input">
-            <i class="heart outline icon"></i>
+          <div className="ui large transparent left icon input">
+            <i className="heart outline icon"></i>
             <input
               type="text"
               placeholder="Add Comment..."
@@ -57,29 +55,29 @@ export default function Comment({ post_id }) {
             />
           </div>
         </form>
-        {comment.id === post_id
-          ? comments.map((comment) => (
-              <div className="comment" key={post_id}>
-                <a href="/" className="avatar">
-                  <img alt="avater" src={faker.image.avatar()} />
+        {comments
+          .filter((comment) => comment.id === post_id)
+          .map((postComment) => (
+            <div className="comment" key={Math.ceil(Math.random() * 1000)}>
+              <a href="/" className="avatar">
+                <img alt="avater" src={faker.image.avatar()} />
+              </a>
+              <div className="content">
+                <a className="author" href="/">
+                  {user.username}
                 </a>
-                <div className="content">
-                  <a className="author" href="/">
-                    {user.username}
+                <div className="metadata">
+                  <span className="date">Today at 5:42PM</span>
+                </div>
+                <div className="text">{postComment.text}</div>
+                <div className="actions">
+                  <a className="reply" href="/">
+                    Reply
                   </a>
-                  <div className="metadata">
-                    <span className="date">Today at 5:42PM</span>
-                  </div>
-                  <div className="text">{comment.text}</div>
-                  <div className="actions">
-                    <a className="reply" href="/">
-                      Reply
-                    </a>
-                  </div>
                 </div>
               </div>
-            ))
-          : "no comment"}
+            </div>
+          ))}
       </div>
     </div>
   );

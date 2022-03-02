@@ -27,13 +27,6 @@ function Home() {
                 id: Math.ceil(Math.random() * 1000),
                 text: post,
                 date: currentDate,
-                comments: [
-                  {
-                    name: "",
-                    text: "",
-                    date: "",
-                  },
-                ],
               },
             ])
           );
@@ -75,7 +68,7 @@ function Home() {
               type="text"
               id="fname"
               name="firstname"
-              placeholder="Your name.."
+              placeholder="Add Post..."
               value={post}
               onChange={(e) => setPost(e.target.value)}
             />
@@ -84,7 +77,9 @@ function Home() {
         </div>
         <div className="post_grid">
           {posts
-            ? posts.map((singlePost) => <Post post={singlePost} />)
+            ? posts.map((singlePost) => (
+                <Post post={singlePost} key={Math.ceil(Math.random() * 1000)} />
+              ))
             : "No posts!"}
         </div>
       </div>
